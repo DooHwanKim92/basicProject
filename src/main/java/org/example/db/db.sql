@@ -6,7 +6,8 @@ USE `proj1`;
 CREATE TABLE `member`(
 id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 deptId int UNSIGNED NOT NULL,
-stateId int UNSIGNED NOT NULL,
+stateId int UNSIGNED NOT NULL DEFAULT '1',
+state char(100),
 name char(100) NOT NULL,
 userId char(100) NOT NULL,
 password char(100) not null,
@@ -27,7 +28,7 @@ CREATE TABLE `dept` (
 CREATE TABLE `state` (
 	`id`	int unsigned not null primary key auto_increment,
 	`state`	char(100) not null,
-	`createdDate`	datetime not null,
+	`createdDate`	datetime,
 	`modifiedDate`	datetime
 );
 

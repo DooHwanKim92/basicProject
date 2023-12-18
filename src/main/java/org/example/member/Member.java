@@ -13,6 +13,7 @@ public class Member {
     private int id;
     private int deptId;
     private int stateId;
+    private String state;
     private String userId;
     private String password;
     private String name;
@@ -27,6 +28,7 @@ public class Member {
         this.id = (int)row.get("id");
         this.deptId = (int)row.get("deptId");
         this.stateId = (int)row.get("stateId");
+        this.state = (String)row.get("state");
         this.userId = (String)row.get("userId");
         this.password = (String)row.get("password");
         this.name = (String)row.get("name");

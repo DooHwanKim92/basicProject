@@ -24,17 +24,17 @@ public class MemberService {
     public void info(String userId) {
         this.memberRepository.info(userId);
     }
-    public void findId() {
-
-    }
-    public void findPw() {
-
-    }
-    public void modifyPw() {
-
+    public void modifyPw(String modifyPw) {
+        memberRepository.modifyPw(modifyPw);
     }
     public Member memberFindByUserId(String userId) {
         return this.memberRepository.memberFindByUserId(userId);
+    }
+    public Member memberFindByUserName(String userName) {
+        return this.memberRepository.memberFindByUserName(userName);
+    }
+    public void modifyState(String modifyState) {
+        memberRepository.modifyPw(modifyState);
     }
 
 }
