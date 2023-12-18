@@ -6,5 +6,7 @@ public class Main {
         Container.initSc();
 
         new App().run();
+
+        Container.closeSc();
     }
 }
