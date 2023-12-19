@@ -15,7 +15,7 @@ public class State {
     public State(Map<String, Object> row) {
         this.id = (int)row.get("id");
         this.state = (String)row.get("state");
-        this.createdDate = (String)row.get("createdDate");
-        this.modifiedDate = (String)row.get("modifiedDate");
+        this.createdDate = row.get("createdDate").toString();
+        this.modifiedDate = row.get("modifiedDate").toString();
     }
 }

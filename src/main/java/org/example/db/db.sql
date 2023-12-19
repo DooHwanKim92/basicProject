@@ -6,7 +6,7 @@ USE `proj1`;
 CREATE TABLE `member`(
 id int UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 deptId int UNSIGNED NOT NULL,
-stateId int UNSIGNED NOT NULL DEFAULT '1',
+stateId int UNSIGNED NOT NULL DEFAULT '6',
 state char(100),
 name char(100) NOT NULL,
 userId char(100) NOT NULL,
@@ -15,8 +15,10 @@ regDate datetime NOT NULL,
 `position` char(100) NOT NULL,
 email char(100) NOT NULL,
 birthDate char(100) NOT NULL,
-createdDate datetime,
-modifiedDate datetime);
+createdDate datetime NOT NULL DEFAULT NOW(),
+modifiedDate datetime NOT NULL DEFAULT NOW(),
+workStrartTime datetime DEFAULT NOW(),
+workEndTime datetime) DEFAULT NOW();
 
 CREATE TABLE `dept` (
 	`id`	int unsigned not null primary key auto_increment,
@@ -30,17 +32,4 @@ CREATE TABLE `state` (
 	`state`	char(100) not null,
 	`createdDate`	datetime,
 	`modifiedDate`	datetime
-);
-
-CREATE TABLE `memberStateList` (
-	`id`	int unsigned not null primary key auto_increment,
-	`deptId`	int unsigned not null,
-	`stateId`	int unsigned not null,
-	`memberName`	char(100) not null,
-	`workStrartTime`	datetime,
-	`workEndTime`	datetime,
-	`workSumTime`	datetime,
-	`createdDate`	datetime,
-	`modifiedDate`	datetime,
-	`position`	char(100) not null
 );

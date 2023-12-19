@@ -13,27 +13,11 @@ public class StateRepository {
     StateRepository() {
         memberRepository = new MemberRepository();
     }
-    public void modify() {
-        return;
-    }
-    public void listByMember(String memberName) {
-        stateFindByName(memberName);
-    }
-    public void listByMemberAll() {
-        stateFindByMemberAll();
-    }
-    public void listByDept(String deptName) {
-        stateFindByDept(deptName);
-    }
-    public void listByDeptAll() {
-        stateFindByDeptAll();
-    }
-    public void stateFindByName(String memberName) {}
-    public void stateFindByMemberAll() {}
-    public void stateFindByDept(String deptName) {}
-    public void stateFindByDeptAll() {}
     public void modifyState(int modifyNumber) {
         memberRepository.modifyState(modifyNumber);
+    }
+    public Member stateFindByUserName(String memberName) {
+        return memberRepository.stateFindByUserName(memberName);
     }
     public List<State> findByAll() {
         List<State> stateList = new ArrayList<>();
@@ -54,5 +38,4 @@ public class StateRepository {
         }
         return null;
     }
-
 }

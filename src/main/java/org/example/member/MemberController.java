@@ -7,9 +7,11 @@ import java.util.List;
 
 public class MemberController {
     MemberService memberService;
+
     public MemberController() {
         memberService = new MemberService();
     }
+
     public void join() {
         if (Container.getLoginedMember() != null) {
             System.out.println("<알림> 로그아웃을 먼저 해야합니다.");
@@ -17,7 +19,7 @@ public class MemberController {
         }
         String userId;
         String checkedPassword;
-        while(true) {
+        while (true) {
             System.out.print("(회원가입)ID 입력 : ");
             userId = Container.getSc().nextLine().trim();
             boolean isDuplicated = true;
@@ -32,7 +34,7 @@ public class MemberController {
         }
 
 
-        while(true) {
+        while (true) {
             System.out.print("(회원가입)PW 입력 : ");
             String password = Container.getSc().nextLine().trim();
             System.out.print("(회원가입)PW 확인 : ");
@@ -64,11 +66,12 @@ public class MemberController {
         System.out.print("(회원가입)생년월일 입력(YYYY.MM.DD) : ");
         String birthDate = Container.getSc().nextLine().trim();
 
-        memberService.join(userId,checkedPassword,name,deptId,email,birthDate);
+        memberService.join(userId, checkedPassword, name, deptId, email, birthDate);
 
-        System.out.println("["+ userId + "] 님 회원가입 성공 !!");
+        System.out.println("[" + userId + "] 님 회원가입 성공 !!");
 
     }
+
     public void logIn() {
         if (Container.getLoginedMember() != null) {
             System.out.println("<알림> 로그아웃을 먼저 해야합니다.");
@@ -94,6 +97,7 @@ public class MemberController {
 
         System.out.println("◈◈◈◈◈ [" + member.getName() + "]님 환영합니다 ◈◈◈◈◈");
     }
+
     public void logOut() {
         if (Container.getLoginedMember() == null) {
             System.out.println("<알림> 로그인을 먼저 해야합니다.");
@@ -104,6 +108,7 @@ public class MemberController {
 
         this.memberService.logout();
     }
+
     public void exit() {
         String password;
         String checkPassword;
@@ -131,7 +136,7 @@ public class MemberController {
         System.out.print("(회원탈퇴)이메일 주소 입력 : ");
         email = Container.getSc().nextLine().trim();
 
-        if(!email.equals(Container.getLoginedMember().getEmail())) {
+        if (!email.equals(Container.getLoginedMember().getEmail())) {
             System.out.println("<알림> 이메일 주소가 맞지 않습니다.");
             return;
         }
@@ -155,12 +160,39 @@ public class MemberController {
             System.out.println("<알림> 비밀번호를 잘못 입력했습니다.");
         }
     }
+
     public void info() {
         if (Container.getLoginedMember() == null) {
             System.out.println("<알림> 로그인을 먼저 해야합니다.");
             return;
         }
-        this.memberService.info(Container.getLoginedMember().getUserId());
+        this.memberService.info(Container.getLoginedMember().getName());
+    }
+
+    public void memberInfo() {
+        if (Container.getLoginedMember() == null) {
+            System.out.println("<알림> 로그인을 먼저 해야합니다.");
+            return;
+        }
+        System.out.println("검색 방식을 선택해주세요.\n 1. 이름 검색\n 2. 사번 검색");
+        while(true) {
+            System.out.print("선택('1'또는 '2'입력) : ");
+            String choice = Container.getSc().nextLine().trim();
+            if (choice.equals("1")) {
+                System.out.print("(직원정보)이름 입력 : ");
+                String memberName = Container.getSc().nextLine().trim();
+                this.memberService.info(memberName);
+                break;
+            } else if (choice.equals("2")) {
+                System.out.print("(직원정보)사번 입력 : ");
+                int memberId = Container.getSc().nextInt();
+                Container.getSc().nextLine();
+                this.memberService.info(memberId);
+                break;
+            } else {
+                System.out.println("<알림> 숫자 '1' 또는 '2'를 입력해주세요.");
+            }
+        }
     }
     public void findId() {
         if (Container.getLoginedMember() != null) {
@@ -172,7 +204,7 @@ public class MemberController {
 
         Member member = this.memberService.memberFindByUserName(userName);
 
-        if (member==null) {
+        if (member == null) {
             System.out.println("<알림> 존재하지 않는 사용자입니다.");
             return;
         }
@@ -188,6 +220,7 @@ public class MemberController {
         System.out.println(userName + "님의 ID는 [" + member.getUserId() + "] 입니다.");
 
     }
+
     public void findPw() {
         if (Container.getLoginedMember() != null) {
             System.out.println("<알림> 로그아웃을 먼저 해야합니다.");
@@ -198,7 +231,7 @@ public class MemberController {
 
         Member member = this.memberService.memberFindByUserId(userId);
 
-        if (member==null) {
+        if (member == null) {
             System.out.println("<알림> 존재하지 않는 사용자입니다.");
             return;
         }
@@ -214,6 +247,7 @@ public class MemberController {
         System.out.println(userId + "님의 PW는 [" + member.getPassword() + "] 입니다.");
 
     }
+
     public void modifyPw() {
         if (Container.getLoginedMember() == null) {
             System.out.println("<알림> 로그인을 먼저 해야합니다.");
@@ -234,18 +268,18 @@ public class MemberController {
         System.out.print("(PW변경)기존 PW 확인 : ");
         String checkPassword = Container.getSc().nextLine().trim();
 
-        if(!password.equals(checkPassword)) {
+        if (!password.equals(checkPassword)) {
             System.out.println("<알림> 비밀번호 확인을 잘못 입력했습니다.");
             return;
         }
 
-        while(true) {
+        while (true) {
             System.out.print("(PW변경)변경 PW 입력 : ");
             modifyPassword = Container.getSc().nextLine().trim();
             System.out.print("(PW변경)변경 PW 확인 : ");
             modifyCheckPassword = Container.getSc().nextLine().trim();
 
-            if(!modifyPassword.equals(modifyCheckPassword)) {
+            if (!modifyPassword.equals(modifyCheckPassword)) {
                 System.out.println("<알림> 비밀번호 확인을 잘못 입력했습니다.");
                 continue;
             }
