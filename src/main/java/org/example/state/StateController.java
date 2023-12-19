@@ -127,7 +127,7 @@ public class StateController {
                 long minute = duration.toMinutes();
 
                 System.out.println("[" + memberName + "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
-                System.out.println("------------------------------");
+                System.out.println("---------------------------------");
                 break;
             } else if (choice.equals("2")) {
                 System.out.print("(직원정보)사번 입력 : ");
@@ -145,7 +145,7 @@ public class StateController {
                 long minute = duration.toMinutes();
 
                 System.out.println("[" + member.getName() + "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
-                System.out.println("------------------------------");
+                System.out.println("---------------------------------");
                 break;
             } else {
                 System.out.println("<알림> 숫자 '1' 또는 '2'를 입력해주세요.");
