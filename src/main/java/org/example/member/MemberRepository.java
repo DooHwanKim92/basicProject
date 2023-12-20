@@ -1,8 +1,6 @@
 package org.example.member;
 
 import org.example.Container;
-import org.example.state.State;
-import org.w3c.dom.ls.LSOutput;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -22,17 +20,11 @@ public class MemberRepository {
 
         Container.getDBConnection().delete(sql);
     }
-    public void info(String userName) {
-        Member member = this.stateFindByUserName(userName);
-        System.out.println("==========================");
-        System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
-        System.out.println("==========================");
+    public Member info(String userName) {
+        return this.stateFindByUserName(userName);
     }
-    public void info(int memberId) {
-        Member member = this.stateFindByUserId(memberId);
-        System.out.println("==========================");
-        System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
-        System.out.println("==========================");
+    public Member info(int memberId) {
+        return this.stateFindByUserId(memberId);
     }
     public void login() {
         String sql = String.format("update member set stateId = 1, modifiedDate = NOW(), workStartTime = NOW() where id = %d", Container.getLoginedMember().getId());

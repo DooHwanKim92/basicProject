@@ -1,9 +1,8 @@
 package org.example.member;
 
 import org.example.Container;
+import org.example.SendMail;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MemberController {
     MemberService memberService;
@@ -165,7 +164,11 @@ public class MemberController {
             System.out.println("<알림> 로그인을 먼저 해야합니다.");
             return;
         }
-        this.memberService.info(Container.getLoginedMember().getName());
+        Member member = this.memberService.info(Container.getLoginedMember().getName());
+
+        System.out.println("==========================");
+        System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
+        System.out.println("==========================");
     }
 
     public void memberInfo() {
@@ -180,13 +183,19 @@ public class MemberController {
             if (choice.equals("1")) {
                 System.out.print("(직원정보)이름 입력 : ");
                 String memberName = Container.getSc().nextLine().trim();
-                this.memberService.info(memberName);
+                Member member = this.memberService.info(memberName);
+                System.out.println("==========================");
+                System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
+                System.out.println("==========================");
                 break;
             } else if (choice.equals("2")) {
                 System.out.print("(직원정보)사번 입력 : ");
                 int memberId = Container.getSc().nextInt();
                 Container.getSc().nextLine();
-                this.memberService.info(memberId);
+                Member member = this.memberService.info(memberId);
+                System.out.println("==========================");
+                System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
+                System.out.println("==========================");
                 break;
             } else {
                 System.out.println("<알림> 숫자 '1' 또는 '2'를 입력해주세요.");
@@ -216,8 +225,18 @@ public class MemberController {
             return;
         }
 
-        System.out.println(userName + "님의 ID는 [" + member.getUserId() + "] 입니다.");
+        SendMail.naverMailSend(member.getEmail());
+        System.out.println("<알림> 등록하신 이메일 주소로 보안코드를 발송하였습니다.");
 
+        System.out.print("보안 코드 입력 : ");
+        int randomCode = Container.getSc().nextInt();
+        Container.getSc().nextLine();
+
+        if (randomCode != SendMail.getRandomNumber()) {
+            System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+            return;
+        }
+        System.out.println(userName + "님의 ID는 [" + member.getUserId() + "] 입니다.");
     }
 
     public void findPw() {
@@ -243,8 +262,19 @@ public class MemberController {
             return;
         }
 
-        System.out.println(userId + "님의 PW는 [" + member.getPassword() + "] 입니다.");
+        SendMail.naverMailSend(member.getEmail());
+        System.out.println("<알림> 등록하신 이메일 주소로 보안코드를 발송하였습니다.");
 
+        System.out.print("보안 코드 입력 : ");
+        int randomCode = Container.getSc().nextInt();
+        Container.getSc().nextLine();
+
+        if (randomCode != SendMail.getRandomNumber()) {
+            System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+            return;
+        }
+
+        System.out.println(userId + "님의 PW는 [" + member.getPassword() + "] 입니다.");
     }
 
     public void modifyPw() {

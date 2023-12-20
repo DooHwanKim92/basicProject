@@ -24,11 +24,11 @@ public class MemberService {
     public void exit (String userId) {
         this.memberRepository.exit(userId);
     }
-    public void info(String userName) {
-        this.memberRepository.info(userName);
+    public Member info(String userName) {
+        return this.memberRepository.info(userName);
     }
-    public void info(int memberId) {
-        this.memberRepository.info(memberId);
+    public Member info(int memberId) {
+        return this.memberRepository.info(memberId);
     }
     public void modifyPw(String modifyPw) {
         memberRepository.modifyPw(modifyPw);

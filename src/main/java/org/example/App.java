@@ -9,6 +9,7 @@ public class App {
     MemberController memberController;
     StateController stateController;
     SystemController systemController;
+    SendMail sendmail;
     public App() {
         DBConnection.DB_NAME = "proj1";
         DBConnection.DB_PORT = 3306;
@@ -22,20 +23,23 @@ public class App {
         systemController = new SystemController();
     }
     public void run() {
-        System.out.println("◆◇◆◇◆◇◆◇ DH컴퍼니 WSMS에 오신 것을 환영합니다 ◆◇◆◇◆◇◆◇");
+        System.out.println(" ◆◇◆◇◆◇◆◇ DH컴퍼니 WSMS에 오신 것을 환영합니다 ◆◇◆◇◆◇◆◇");
         System.out.println("                < 명령어 목록 >");
         System.out.println("           회원가입 / 로그인 / 로그아웃");
-        System.out.println("        ID찾기 / PW찾기 / PW변경 / 회원탈퇴");
-        System.out.println("  나의정보 / 직원정보 / 근태조회 / 근태변경 / 근무시간");
+        System.out.println("     ID찾기 / PW찾기 / PW변경 / 회원탈퇴 / 메일발송");
+        System.out.println("   나의정보 / 직원정보 / 근태조회 / 근태변경 / 근무시간");
         System.out.println("          명령어 다시 보기 : '명령어' 입력");
-        System.out.println("◆◇◆◇◆◇◆◇ Working State Management System ◆◇◆◇◆◇◆◇◆");
-
+        System.out.println("◆◇◆◇◆◇◆◇◆◇ Working State Management System ◆◇◆◇◆◇◆◇◆◆◇");
 
         while (true) {
             System.out.print("명령어 입력 ▶ ");
             String command = Container.getSc().nextLine().trim();
             switch (command) {
                 case "종료":
+                    if (Container.getLoginedMember() != null) {
+                        System.out.println("<알림> 로그아웃을 먼저 해야합니다.");
+                        continue;
+                    }
                     systemController.exit();
                     return;
                 case "명령어":
@@ -77,11 +81,10 @@ public class App {
                 case "근무시간":
                     stateController.workingSumTime();
                     break;
+                case "메일발송":
+                    systemController.sendEmail();
+                    break;
             }
         }
     }
 }
-
-// 자 오늘 할 일은 무어냐
-// 학원에서 작업하던거 이어서
-// 초급프로젝트 완성 시키고, test, 오류, 예외사항 자잘한 것들 detail 살리고 잡고 ㅇㅇ 디버깅

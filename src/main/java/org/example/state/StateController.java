@@ -2,21 +2,19 @@ package org.example.state;
 
 import org.example.Container;
 import org.example.member.Member;
-import org.example.member.MemberRepository;
 import org.example.member.MemberService;
 
 import java.time.Duration;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class StateController {
     StateService stateService;
     MemberService memberService;
-    MemberRepository memberRepository;
 
     public StateController() {
         stateService = new StateService();
         memberService = new MemberService();
-        memberRepository = new MemberRepository();
     }
 
     public void list() {
@@ -38,7 +36,7 @@ public class StateController {
             System.out.println("<알림> 로그인을 먼저 해야합니다.");
             return;
         }
-        Member member = memberRepository.stateFindByUserName(Container.getLoginedMember().getName());
+        Member member = stateService.stateFindByUserName(Container.getLoginedMember().getName());
         System.out.println("현재 근태 상태는 [" + member.getState() + "] 입니다.");
         System.out.println("변경 가능한 근태");
         System.out.println("=============");
@@ -57,32 +55,63 @@ public class StateController {
 
         State state = stateService.stateFindById(modifyNumber);
 
-        System.out.println("<알림> 현재 근태 상태가 [" + state.getState() + "]으로 변경되었습니다.");
+        System.out.println("<알림> 현재 근태가 [" + state.getState() + "]으로 변경되었습니다.");
     }
 
     public void listByMember() {
         System.out.print("특정직원/전체직원을 선택해주세요 ('특정' 또는 '전체' 입력) : ");
         String listMemberSelect = Container.getSc().nextLine().trim();
         if (listMemberSelect.equals("특정")) {
-            System.out.print("직원 이름을 입력해주세요 : ");
-            String memberName = Container.getSc().nextLine().trim();
 
-            if (memberRepository.memberFindByUserName(memberName) == null) {
-                System.out.println("<알림> 존재하지 않는 사용자입니다.");
-                return;
+            System.out.println("검색 방식을 선택해주세요.\n 1. 이름 검색\n 2. 사번 검색");
+            while(true) {
+                System.out.print("선택('1'또는 '2'입력) : ");
+                String choice = Container.getSc().nextLine().trim();
+                if (choice.equals("1")) {
+                    System.out.print("(직원정보)이름 입력 : ");
+                    String memberName = Container.getSc().nextLine().trim();
+
+                    if (stateService.memberFindByUserName(memberName) == null) {
+                        System.out.println("<알림> 존재하지 않는 사용자입니다.");
+                        return;
+                    }
+
+                    Member member = stateService.memberFindByUserName(memberName);
+                    System.out.println("[" + member.getName() + " " + member.getPosition() + "]님의 현재 근태는 [" + member.getState() + "]입니다.");
+                    break;
+                } else if (choice.equals("2")) {
+                    try{
+                        System.out.print("(직원정보)사번 입력 : ");
+                        int memberId = Container.getSc().nextInt();
+                        Container.getSc().nextLine();
+                        Member member = stateService.memberFindById(memberId);
+
+                        if (member == null) {
+                            System.out.println("<알림> 존재하지 않는 사용자입니다.");
+                            return;
+                        }
+
+                        System.out.println("[" + member.getName() + " " + member.getPosition() + "]님의 현재 근태는 [" + member.getState() + "]입니다.");
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("<알림> 사번은 숫자만 입력이 가능합니다.");
+                        Container.getSc().nextLine();
+                        return;
+                    }
+                } else {
+                    System.out.println("<알림> 숫자 '1' 또는 '2'를 입력해주세요.");
+                }
             }
 
-            Member member = stateService.stateFindByUserName(memberName);
-            System.out.println("[" + memberName +" "+ member.getPosition() +"]님의 현재 근태는 [" + member.getState() + "] 입니다.");
         } else if (listMemberSelect.equals("전체")) {
             List<Member> memberList = memberService.findByAll();
-            System.out.println("   ------------ DH 컴퍼니 근태 현황 ------------");
+            System.out.println("   ----------- DH 컴퍼니 직원 근태 현황 -----------");
             System.out.println(" 【 사원번호 / 이름 / 부서 / 직급 / 근태 / 변경시간 】 ");
-            System.out.println("  ---------------------------------------------");
+            System.out.println("  ------------------------------------------------");
             for (Member member : memberList) {
                 System.out.println(" 【 " + member.getId() + " / " + member.getName() + " / " + member.getDeptName() + " / " + member.getPosition() + " / " + member.getState() + " / " + member.getModifiedDate() + " 】");
             }
-            System.out.println("  ---------------------------------------------");
+            System.out.println("  ------------------------------------------------");
         }
     }
 
@@ -94,15 +123,15 @@ public class StateController {
         System.out.print("부서 ID를 입력해주세요 : ");
         int deptId = Container.getSc().nextInt();
         Container.getSc().nextLine();
-        List<Member> memberList = memberRepository.findByDept(deptId);
-        Member memberDept = memberRepository.stateGroupByDept(deptId);
-        System.out.println("   ----------["+memberDept.getDeptName() + "] 근태 현황----------");
+        List<Member> memberList = stateService.findByDept(deptId);
+        Member deptMember = stateService.stateGroupByDept(deptId);
+        System.out.println("   ------------["+deptMember.getDeptName() + "] 근태 현황------------");
         System.out.println(" 【 사원번호 / 이름 / 직급 / 근태 / 변경시간 】 ");
-        System.out.println("  --------------------------------------");
+        System.out.println("  ------------------------------------------");
         for (Member member : memberList) {
             System.out.println(" 【 " + member.getId()+" / "+ member.getName() + " / " + member.getPosition() + " / " + member.getState() +" / " + member.getModifiedDate() + " 】");
         }
-        System.out.println("  --------------------------------------");
+        System.out.println("  ------------------------------------------");
     }
     public void workingSumTime() {
         if (Container.getLoginedMember() == null) {
@@ -115,9 +144,12 @@ public class StateController {
             System.out.print("선택('1'또는 '2'입력) : ");
             String choice = Container.getSc().nextLine().trim();
             if (choice.equals("1")) {
-                System.out.print("(직원정보)이름 입력 : ");
+                System.out.print("(근무시간)이름 입력 : ");
                 String memberName = Container.getSc().nextLine().trim();
-                if (memberRepository.memberFindByUserName(memberName) == null) {
+
+                Member member = stateService.memberFindByUserName(memberName);
+
+                if (member == null) {
                     System.out.println("<알림> 존재하지 않는 사용자입니다.");
                     return;
                 }
@@ -126,15 +158,15 @@ public class StateController {
                 long hour = duration.toHours();
                 long minute = duration.toMinutes();
 
-                System.out.println("[" + memberName + "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
+                System.out.println("[" + member.getName() + " " + member.getPosition() + "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
                 System.out.println("---------------------------------");
                 break;
             } else if (choice.equals("2")) {
-                System.out.print("(직원정보)사번 입력 : ");
+                System.out.print("(근무시간)사번 입력 : ");
                 int memberId = Container.getSc().nextInt();
                 Container.getSc().nextLine();
 
-                Member member = memberRepository.memberFindById(memberId);
+                Member member = stateService.memberFindById(memberId);
                 if (member == null) {
                     System.out.println("<알림> 존재하지 않는 사용자입니다.");
                     return;
@@ -144,7 +176,7 @@ public class StateController {
                 long hour = duration.toHours();
                 long minute = duration.toMinutes();
 
-                System.out.println("[" + member.getName() + "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
+                System.out.println("[" + member.getName() +" "+ member.getPosition()+ "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
                 System.out.println("---------------------------------");
                 break;
             } else {
