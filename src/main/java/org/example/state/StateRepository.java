@@ -38,4 +38,16 @@ public class StateRepository {
         }
         return null;
     }
+    public Member memberFindByUserName(String userName) {
+        return this.memberRepository.memberFindByUserName(userName);
+    }
+    public List<Member> findByDept(int deptId) {
+        return this.memberRepository.findByDept(deptId);
+    }
+    public Member stateGroupByDept(int deptId) {
+        return this.memberRepository.stateGroupByDept(deptId);
+    }
+    public Member memberFindById(int id) {
+        return this.memberRepository.memberFindById(id);
+    }
 }

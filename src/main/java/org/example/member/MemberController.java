@@ -1,6 +1,7 @@
 package org.example.member;
 
 import org.example.Container;
+import org.example.SendMail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -226,6 +227,19 @@ public class MemberController {
             return;
         }
 
+        SendMail.naverMailSend(member.getEmail());
+        System.out.println("<알림> 등록하신 이메일 주소로 보안코드를 발송하였습니다.");
+
+        System.out.print("보안 코드 입력 : ");
+
+        int randomCode = Container.getSc().nextInt();
+        Container.getSc().nextLine();
+
+        if (randomCode != SendMail.getRandomNumber()) {
+            System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+            return;
+        }
+
         System.out.println(userName + "님의 ID는 [" + member.getUserId() + "] 입니다.");
 
     }
@@ -253,8 +267,19 @@ public class MemberController {
             return;
         }
 
-        System.out.println(userId + "님의 PW는 [" + member.getPassword() + "] 입니다.");
+        SendMail.naverMailSend(member.getEmail());
+        System.out.println("<알림> 등록하신 이메일 주소로 보안코드를 발송하였습니다.");
 
+        System.out.print("보안 코드 입력 : ");
+        int randomCode = Container.getSc().nextInt();
+        Container.getSc().nextLine();
+
+        if (randomCode != SendMail.getRandomNumber()) {
+            System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+            return;
+        }
+
+        System.out.println(userId + "님의 PW는 [" + member.getPassword() + "] 입니다.");
     }
 
     public void modifyPw() {

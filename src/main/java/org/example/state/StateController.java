@@ -11,12 +11,10 @@ import java.util.List;
 public class StateController {
     StateService stateService;
     MemberService memberService;
-    MemberRepository memberRepository;
 
     public StateController() {
         stateService = new StateService();
         memberService = new MemberService();
-        memberRepository = new MemberRepository();
     }
 
     public void list() {
@@ -38,7 +36,7 @@ public class StateController {
             System.out.println("<알림> 로그인을 먼저 해야합니다.");
             return;
         }
-        Member member = memberRepository.stateFindByUserName(Container.getLoginedMember().getName());
+        Member member = stateService.stateFindByUserName(Container.getLoginedMember().getName());
         System.out.println("현재 근태 상태는 [" + member.getState() + "] 입니다.");
         System.out.println("변경 가능한 근태");
         System.out.println("=============");
@@ -67,7 +65,7 @@ public class StateController {
             System.out.print("직원 이름을 입력해주세요 : ");
             String memberName = Container.getSc().nextLine().trim();
 
-            if (memberRepository.memberFindByUserName(memberName) == null) {
+            if (stateService.memberFindByUserName(memberName) == null) {
                 System.out.println("<알림> 존재하지 않는 사용자입니다.");
                 return;
             }
@@ -94,8 +92,8 @@ public class StateController {
         System.out.print("부서 ID를 입력해주세요 : ");
         int deptId = Container.getSc().nextInt();
         Container.getSc().nextLine();
-        List<Member> memberList = memberRepository.findByDept(deptId);
-        Member memberDept = memberRepository.stateGroupByDept(deptId);
+        List<Member> memberList = stateService.findByDept(deptId);
+        Member memberDept = stateService.stateGroupByDept(deptId);
         System.out.println("   ------------["+memberDept.getDeptName() + "] 근태 현황------------");
         System.out.println(" 【 사원번호 / 이름 / 직급 / 근태 / 변경시간 】 ");
         System.out.println("  ------------------------------------------");
@@ -118,7 +116,7 @@ public class StateController {
                 System.out.print("(직원정보)이름 입력 : ");
                 String memberName = Container.getSc().nextLine().trim();
 
-                Member member = memberRepository.memberFindByUserName(memberName);
+                Member member = stateService.memberFindByUserName(memberName);
 
                 if (member == null) {
                     System.out.println("<알림> 존재하지 않는 사용자입니다.");
@@ -137,7 +135,7 @@ public class StateController {
                 int memberId = Container.getSc().nextInt();
                 Container.getSc().nextLine();
 
-                Member member = memberRepository.memberFindById(memberId);
+                Member member = stateService.memberFindById(memberId);
                 if (member == null) {
                     System.out.println("<알림> 존재하지 않는 사용자입니다.");
                     return;

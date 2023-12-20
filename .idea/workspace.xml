@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b5e152d-f826-4054-ba5e-0e4231228410" name="변경" comment="day-3-other" />
+    <list default="true" id="5b5e152d-f826-4054-ba5e-0e4231228410" name="변경" comment="day-3-other">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/SendMail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/SystemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/SystemController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/member/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/member/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/StateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/StateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/StateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/StateRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/state/StateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/state/StateService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,12 +44,8 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="other" />
-                    <option name="lastUsedInstant" value="1703060498" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="master" />
-                    <option name="lastUsedInstant" value="1703060497" />
+                    <option name="branchName" value="another" />
+                    <option name="lastUsedInstant" value="1703060577" />
                   </RecentBranch>
                 </list>
               </option>
@@ -68,7 +73,8 @@
     "Gradle.untitled [:Main.main()].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "other",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "another",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
@@ -119,7 +125,23 @@
       <option name="project" value="LOCAL" />
       <updated>1703060523688</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="day-3-other">
+      <option name="closed" value="true" />
+      <created>1703060583485</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703060583485</updated>
+    </task>
+    <task id="LOCAL-00003" summary="day-3-other">
+      <option name="closed" value="true" />
+      <created>1703060587061</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1703060587061</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
