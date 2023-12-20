@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5b5e152d-f826-4054-ba5e-0e4231228410" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Container.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/SystemController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/db/DBConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/db/db.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/member/Member.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/member/MemberController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/member/MemberRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/member/MemberService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/state/State.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/state/StateController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/state/StateRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/state/StateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="5b5e152d-f826-4054-ba5e-0e4231228410" name="변경" comment="day-3-other" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +27,29 @@
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="other" />
+                    <option name="lastUsedInstant" value="1703060498" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1703060497" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -63,7 +68,7 @@
     "Gradle.untitled [:Main.main()].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "other",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
@@ -106,9 +111,20 @@
       <option name="presentableId" value="Default" />
       <updated>1703050190857</updated>
     </task>
+    <task id="LOCAL-00001" summary="day-3-other">
+      <option name="closed" value="true" />
+      <created>1703060523688</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1703060523688</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="day-3-other" />
+    <option name="LAST_COMMIT_MESSAGE" value="day-3-other" />
   </component>
 </project>
