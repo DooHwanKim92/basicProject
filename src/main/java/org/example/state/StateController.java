@@ -64,7 +64,7 @@ public class StateController {
         if (listMemberSelect.equals("특정")) {
 
             System.out.println("검색 방식을 선택해주세요.\n 1. 이름 검색\n 2. 사번 검색");
-            while(true) {
+            while (true) {
                 System.out.print("선택('1'또는 '2'입력) : ");
                 String choice = Container.getSc().nextLine().trim();
                 if (choice.equals("1")) {
@@ -80,7 +80,7 @@ public class StateController {
                     System.out.println("[" + member.getName() + " " + member.getPosition() + "]님의 현재 근태는 [" + member.getState() + "]입니다.");
                     break;
                 } else if (choice.equals("2")) {
-                    try{
+                    try {
                         System.out.print("(직원정보)사번 입력 : ");
                         int memberId = Container.getSc().nextInt();
                         Container.getSc().nextLine();
@@ -125,23 +125,24 @@ public class StateController {
         Container.getSc().nextLine();
         List<Member> memberList = stateService.findByDept(deptId);
         Member deptMember = stateService.stateGroupByDept(deptId);
-        System.out.println("   ------------["+deptMember.getDeptName() + "] 근태 현황------------");
+        System.out.println("   ------------[" + deptMember.getDeptName() + "] 근태 현황------------");
         System.out.println(" 【 사원번호 / 이름 / 직급 / 근태 / 변경시간 】 ");
         System.out.println("  ------------------------------------------");
         for (Member member : memberList) {
-            System.out.println(" 【 " + member.getId()+" / "+ member.getName() + " / " + member.getPosition() + " / " + member.getState() +" / " + member.getModifiedDate() + " 】");
+            System.out.println(" 【 " + member.getId() + " / " + member.getName() + " / " + member.getPosition() + " / " + member.getState() + " / " + member.getModifiedDate() + " 】");
         }
         System.out.println("  ------------------------------------------");
     }
+
     public void workingSumTime() {
         if (Container.getLoginedMember() == null) {
             System.out.println("<알림> 로그인을 먼저 해야합니다.");
             return;
         }
         System.out.println("---------- 근무시간 조회 ----------");
-        System.out.println("검색 방식을 선택해주세요.\n 1. 이름 검색\n 2. 사번 검색");
-        while(true) {
-            System.out.print("선택('1'또는 '2'입력) : ");
+        System.out.println("검색 방식을 선택해주세요.\n 1. 이름 검색\n 2. 사번 검색\n 3. 전체 직원");
+        while (true) {
+            System.out.print("선택(숫자 입력) : ");
             String choice = Container.getSc().nextLine().trim();
             if (choice.equals("1")) {
                 System.out.print("(근무시간)이름 입력 : ");
@@ -156,9 +157,10 @@ public class StateController {
                 Duration duration = memberService.workingSumTime(memberName);
 
                 long hour = duration.toHours();
-                long minute = duration.toMinutes();
+                long minute = (duration.toMinutes()%60);
+                long sixtyminute = (duration.toMinutes()/60);
 
-                System.out.println("[" + member.getName() + " " + member.getPosition() + "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
+                System.out.println("[" + member.getName() + " " + member.getPosition() + "]님의 일일 근무 시간은 [" + (hour+sixtyminute) + " 시간 " + minute + " 분] 입니다.");
                 System.out.println("---------------------------------");
                 break;
             } else if (choice.equals("2")) {
@@ -174,13 +176,31 @@ public class StateController {
 
                 Duration duration = memberService.workingSumTime(memberId);
                 long hour = duration.toHours();
-                long minute = duration.toMinutes();
+                long minute = (duration.toMinutes()%60);
+                long sixtyminute = (duration.toMinutes()/60);
 
-                System.out.println("[" + member.getName() +" "+ member.getPosition()+ "]님의 일일 근무 시간은 [" + hour + " 시간 " + minute + " 분] 입니다.");
+                System.out.println("[" + member.getName() + " " + member.getPosition() + "]님의 일일 근무 시간은 [" + (hour+sixtyminute) + " 시간 " + minute + " 분] 입니다.");
                 System.out.println("---------------------------------");
                 break;
-            } else {
-                System.out.println("<알림> 숫자 '1' 또는 '2'를 입력해주세요.");
+            } else if (choice.equals("3")) {
+
+                List<Member> memberList = memberService.findByAll();
+                System.out.println("  ---------- 전직원 근무시간 현황 -----------");
+                System.out.println(" 【 사원번호 / 이름 / 부서 / 직급 / 근무시간 】 ");
+                System.out.println("  ------------------------------------------");
+                for (Member member : memberList) {
+                    Duration duration = memberService.workingSumTime(member.getId());
+                    long hour = duration.toHours();
+                    long minute = (duration.toMinutes()%60);
+                    long sixtyminute = (duration.toMinutes()/60);
+
+                    System.out.println(" 【 " + member.getId() + " / " + member.getName() + " / " + member.getDeptName() + " / " + member.getPosition() + " / " + (hour+sixtyminute) + " 시간 " + minute + " 분 】");
+                }
+                System.out.println("  ------------------------------------------");
+                break;
+            }
+            else {
+                System.out.println("<알림> 숫자 '1~3' 중 하나를 입력해주세요.");
             }
         }
     }

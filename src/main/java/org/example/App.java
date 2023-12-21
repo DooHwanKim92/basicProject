@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.confirm.ConfirmController;
 import org.example.db.DBConnection;
 import org.example.member.MemberController;
 import org.example.state.StateController;
@@ -8,6 +9,7 @@ import org.example.state.StateController;
 public class App {
     MemberController memberController;
     StateController stateController;
+    ConfirmController confirmController;
     SystemController systemController;
     SendMail sendmail;
     public App() {
@@ -20,14 +22,16 @@ public class App {
 
         memberController = new MemberController();
         stateController = new StateController();
+        confirmController = new ConfirmController();
         systemController = new SystemController();
     }
     public void run() {
-        System.out.println(" ◆◇◆◇◆◇◆◇ DH컴퍼니 WSMS에 오신 것을 환영합니다 ◆◇◆◇◆◇◆◇");
+        System.out.println("◆◇◆◇◆◇◆◇ DH컴퍼니 WSMS에 오신 것을 환영합니다 ◆◇◆◇◆◇◆◇");
         System.out.println("                < 명령어 목록 >");
         System.out.println("           회원가입 / 로그인 / 로그아웃");
-        System.out.println("     ID찾기 / PW찾기 / PW변경 / 회원탈퇴 / 메일발송");
-        System.out.println("   나의정보 / 직원정보 / 근태조회 / 근태변경 / 근무시간");
+        System.out.println("        ID찾기 / PW찾기 / PW변경 / 회원탈퇴");
+        System.out.println("        메일발송 / 결재 / 나의정보 / 직원정보");
+        System.out.println("           근태조회 / 근태변경 / 근무시간");
         System.out.println("          명령어 다시 보기 : '명령어' 입력");
         System.out.println("◆◇◆◇◆◇◆◇◆◇ Working State Management System ◆◇◆◇◆◇◆◇◆◆◇");
 
@@ -83,6 +87,9 @@ public class App {
                     break;
                 case "메일발송":
                     systemController.sendEmail();
+                    break;
+                case "결재":
+                    confirmController.confirm();
                     break;
             }
         }

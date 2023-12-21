@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class MemberRepository {
     public void join(String userId, String password,String name,int deptId,String email, String birthDate) {
-        String sql = String.format("insert into member set userId = '%s', password = '%s', name = '%s', deptId =%d, email = '%s', birthDate = '%s',position = '사원', regDate = NOW(), stateId = 6, createdDate = NOW(), modifiedDate = NOW(), workStartTime = NOW(), workEndTime = NOW();", userId, password,name,deptId,email,birthDate);
+        String sql = String.format("insert into member set userId = '%s', password = '%s', name = '%s', deptId =%d, email = '%s', birthDate = '%s',position = '사원', stateId = 6, createdDate = '%s', modifiedDate = '%s', workStartTime = '%s', workEndTime = '%s';", userId, password,name,deptId,email,birthDate,Container.nowDateTime(),Container.nowDateTime(),Container.nowDateTime(),Container.nowDateTime());
 
         Container.getDBConnection().insert(sql);
     }
@@ -27,12 +27,12 @@ public class MemberRepository {
         return this.stateFindByUserId(memberId);
     }
     public void login() {
-        String sql = String.format("update member set stateId = 1, modifiedDate = NOW(), workStartTime = NOW() where id = %d", Container.getLoginedMember().getId());
+        String sql = String.format("update member set stateId = 1, modifiedDate = '%s', workStartTime = '%s' where id = %d", Container.nowDateTime(),Container.nowDateTime(),Container.getLoginedMember().getId());
 
         Container.getDBConnection().update(sql);
     }
     public void logout() {
-        String sql = String.format("update member set stateId = 6, modifiedDate = NOW(), workEndTime = NOW() where id = %d", Container.getLoginedMember().getId());
+        String sql = String.format("update member set stateId = 6, modifiedDate = '%s', workEndTime = '%s' where id = %d",Container.nowDateTime(),Container.nowDateTime(),Container.getLoginedMember().getId());
 
         Container.getDBConnection().update(sql);
     }
@@ -78,7 +78,6 @@ public class MemberRepository {
                 "`member`.name,\n" +
                 "`member`.userId,\n" +
                 "`member`.password,\n" +
-                "`member`.regDate,\n" +
                 "`member`.`position`,\n" +
                 "`member`.email,\n" +
                 "`member`.birthDate,\n" +
@@ -109,7 +108,6 @@ public class MemberRepository {
                 "`member`.name,\n" +
                 "`member`.userId,\n" +
                 "`member`.password,\n" +
-                "`member`.regDate,\n" +
                 "`member`.`position`,\n" +
                 "`member`.email,\n" +
                 "`member`.birthDate,\n" +
@@ -160,7 +158,7 @@ public class MemberRepository {
         return null;
     }
     public void modifyState(int modifyNumber) {
-        String sql = String.format("update member set `stateId` = %d, `modifiedDate`=NOW() where id = %d;",modifyNumber, Container.getLoginedMember().getId());
+        String sql = String.format("update member set `stateId` = %d, `modifiedDate`= '%s' where id = %d;",modifyNumber,Container.nowDateTime(),Container.getLoginedMember().getId());
 
         Container.getDBConnection().update(sql);
     }

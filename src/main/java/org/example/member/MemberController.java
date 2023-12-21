@@ -2,13 +2,21 @@ package org.example.member;
 
 import org.example.Container;
 import org.example.SendMail;
+import org.example.confirm.ConfirmService;
 
+import javax.mail.AuthenticationFailedException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
 
 public class MemberController {
     MemberService memberService;
+    ConfirmService confirmService;
 
     public MemberController() {
+
         memberService = new MemberService();
+        confirmService = new ConfirmService();
     }
 
     public void join() {
@@ -54,10 +62,18 @@ public class MemberController {
         System.out.println("=============");
         System.out.println(" 1. 총무팀\n 2. 기획팀\n 3. 영업팀\n 4. R&D본부\n 5. 서비스본부\n 6. 유통팀\n 7. 생산팀");
         System.out.println("=============");
-        System.out.print("(회원가입)부서번호 입력 : ");
-        int deptId = Container.getSc().nextInt();
-
-        Container.getSc().nextLine();
+        int deptId;
+        while(true) {
+            System.out.print("(회원가입)부서번호 입력 : ");
+            int deptIdInput = Container.getSc().nextInt();
+            Container.getSc().nextLine();
+            if (deptIdInput>7 || deptIdInput<1) {
+                System.out.println("<알림> 존재하지 않는 부서번호 입니다.");
+                continue;
+            }
+            deptId = deptIdInput;
+            break;
+        }
 
         System.out.print("(회원가입)이메일 입력 : ");
         String email = Container.getSc().nextLine().trim();
@@ -94,6 +110,10 @@ public class MemberController {
         Container.setLoginedMember(member);
 
         System.out.println("◈◈◈◈◈ [" + member.getName() + "]님 환영합니다 ◈◈◈◈◈");
+
+        if (member.getPosition().equals("대표") && confirmService.findByAll() != null) {
+                System.out.println("<알림> 결재함에 미결재 문서가 존재합니다.");
+        }
     }
 
     public void logOut() {
@@ -167,7 +187,7 @@ public class MemberController {
         Member member = this.memberService.info(Container.getLoginedMember().getName());
 
         System.out.println("==========================");
-        System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
+        System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n", member.getName(), member.getId(), member.getEmail(), member.getDeptName(), member.getPosition(), member.getCreatedDate(), member.getState());
         System.out.println("==========================");
     }
 
@@ -177,7 +197,7 @@ public class MemberController {
             return;
         }
         System.out.println("검색 방식을 선택해주세요.\n 1. 이름 검색\n 2. 사번 검색");
-        while(true) {
+        while (true) {
             System.out.print("선택('1'또는 '2'입력) : ");
             String choice = Container.getSc().nextLine().trim();
             if (choice.equals("1")) {
@@ -185,7 +205,7 @@ public class MemberController {
                 String memberName = Container.getSc().nextLine().trim();
                 Member member = this.memberService.info(memberName);
                 System.out.println("==========================");
-                System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
+                System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n", member.getName(), member.getId(), member.getEmail(), member.getDeptName(), member.getPosition(), member.getCreatedDate(), member.getState());
                 System.out.println("==========================");
                 break;
             } else if (choice.equals("2")) {
@@ -194,7 +214,7 @@ public class MemberController {
                 Container.getSc().nextLine();
                 Member member = this.memberService.info(memberId);
                 System.out.println("==========================");
-                System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n",member.getName(),member.getId(),member.getEmail(),member.getDeptName(),member.getPosition(),member.getRegDate(),member.getState());
+                System.out.printf("1. 이름 : %s\n2. 사번 : %d\n3. 이메일주소 : %s\n4. 소속부서 : %s\n5. 직급 : %s\n6. 입사일자 : %s\n7. 근태 : %s\n", member.getName(), member.getId(), member.getEmail(), member.getDeptName(), member.getPosition(), member.getCreatedDate(), member.getState());
                 System.out.println("==========================");
                 break;
             } else {
@@ -202,6 +222,7 @@ public class MemberController {
             }
         }
     }
+
     public void findId() {
         if (Container.getLoginedMember() != null) {
             System.out.println("<알림> 로그아웃을 먼저 해야합니다.");
@@ -225,18 +246,30 @@ public class MemberController {
             return;
         }
 
-        SendMail.naverMailSend(member.getEmail());
+        String sendEmail = SendMail.naverMailSend(member.getEmail());
+        if (sendEmail.equals("실패")) {
+            return;
+        }
+
         System.out.println("<알림> 등록하신 이메일 주소로 보안코드를 발송하였습니다.");
 
         System.out.print("보안 코드 입력 : ");
-        int randomCode = Container.getSc().nextInt();
-        Container.getSc().nextLine();
+        try {
+            int randomCode = Container.getSc().nextInt();
+            Container.getSc().nextLine();
 
-        if (randomCode != SendMail.getRandomNumber()) {
-            System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+            if (randomCode != SendMail.getRandomNumber()) {
+                System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+                return;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("<알림> 보안 코드는 숫자만 입력 가능합니다.");
+            Container.getSc().nextLine();
             return;
         }
+
         System.out.println(userName + "님의 ID는 [" + member.getUserId() + "] 입니다.");
+
     }
 
     public void findPw() {
@@ -262,15 +295,26 @@ public class MemberController {
             return;
         }
 
-        SendMail.naverMailSend(member.getEmail());
+
+        String sendEmail = SendMail.naverMailSend(member.getEmail());
+        if (sendEmail.equals("실패")) {
+            return;
+        }
+
         System.out.println("<알림> 등록하신 이메일 주소로 보안코드를 발송하였습니다.");
 
         System.out.print("보안 코드 입력 : ");
-        int randomCode = Container.getSc().nextInt();
-        Container.getSc().nextLine();
+        try {
+            int randomCode = Container.getSc().nextInt();
+            Container.getSc().nextLine();
 
-        if (randomCode != SendMail.getRandomNumber()) {
-            System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+            if (randomCode != SendMail.getRandomNumber()) {
+                System.out.println("<알림> 보안 코드가 맞지 않습니다.");
+                return;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("<알림> 보안 코드는 숫자만 입력 가능합니다.");
+            Container.getSc().nextLine();
             return;
         }
 
