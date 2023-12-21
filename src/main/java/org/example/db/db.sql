@@ -11,7 +11,6 @@ state char(100),
 name char(100) NOT NULL,
 userId char(100) NOT NULL,
 password char(100) not null,
-regDate datetime NOT NULL,
 `position` char(100) NOT NULL,
 email char(100) NOT NULL,
 birthDate char(100) NOT NULL,
@@ -32,4 +31,15 @@ CREATE TABLE `state` (
 	`state`	char(100) not null,
 	`createdDate`	datetime,
 	`modifiedDate`	datetime
+);
+
+CREATE TABLE confirm (
+	`id`	int unsigned not null primary key auto_increment,
+	`title`	char(100),
+	`date` char(100),
+	`reason` char(100),
+	`memberId` int UNSIGNED,
+	`deptId` int UNSIGNED,
+	`createdDate`	datetime NOT NULL DEFAULT NOW(),
+	`modifiedDate`	datetime NOT NULL DEFAULT NOW()
 );

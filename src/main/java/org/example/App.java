@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.confirm.ConfirmController;
 import org.example.db.DBConnection;
 import org.example.member.MemberController;
 import org.example.state.StateController;
@@ -8,6 +9,7 @@ import org.example.state.StateController;
 public class App {
     MemberController memberController;
     StateController stateController;
+    ConfirmController confirmController;
     SystemController systemController;
     SendMail sendmail;
     public App() {
@@ -20,6 +22,7 @@ public class App {
 
         memberController = new MemberController();
         stateController = new StateController();
+        confirmController = new ConfirmController();
         systemController = new SystemController();
     }
     public void run() {
@@ -36,6 +39,10 @@ public class App {
             String command = Container.getSc().nextLine().trim();
             switch (command) {
                 case "종료":
+                    if (Container.getLoginedMember() != null) {
+                        System.out.println("<알림> 로그아웃을 먼저 해야합니다.");
+                        continue;
+                    }
                     systemController.exit();
                     return;
                 case "명령어":
@@ -79,6 +86,9 @@ public class App {
                     break;
                 case "메일발송":
                     systemController.sendEmail();
+                    break;
+                case "결재":
+                    confirmController.confirm();
                     break;
             }
         }

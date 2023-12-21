@@ -19,7 +19,6 @@ public class Member {
     private String password;
     private String name;
     private String position;
-    private String regDate;
     private String email;
     private String birthDate;
     private String createdDate;
@@ -37,7 +36,6 @@ public class Member {
         this.password = (String)row.get("password");
         this.name = (String)row.get("name");
         this.position = (String)row.get("position");
-        this.regDate = row.get("regDate").toString();
         this.email = (String)row.get("email");
         this.birthDate = (String)row.get("birthDate");
         this.createdDate = row.get("createdDate").toString();
