@@ -18,7 +18,7 @@ public class SendMail {
     public static String naverMailSend(String emailAddress) {
 
         String user = "rmfpsvldj01@naver.com";
-        String password = "k1d2h3k1d2h3";
+        String password = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -61,7 +61,7 @@ public class SendMail {
 
     public static void naverMailSend(String emailAddress, String title, String text) {
         String user = "rmfpsvldj01@naver.com";
-        String password = "k1d2h3k1d2h3";
+        String password = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
